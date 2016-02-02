@@ -1,0 +1,41 @@
+class Current:
+	n = 0
+	s = 0
+	e = 0
+	w = 0
+
+	def __init__(self, nn, ss, ee, ww):
+		self.n = nn
+		self.s = ss
+		self.e = ee
+		self.w = ww
+
+	def setNorth(self,nn):
+		self.n = nn
+	def setSouth(self,ss):
+		self.s = ss
+	def setWest(self,ww):
+		self.w = ww
+	def setEast(self, ee):
+		self.e = ee
+	def getNorth(self):
+		return self.n
+	def getSouth(self):
+		return self.s
+	def getWest(self):
+		return self.w
+	def getEast(self):
+		return self.e
+
+	def printCurrents(self):
+		print "North: %d" % self.n
+		print "South: %d" % self.s
+		print "West: %d" % self.w
+		print "East: %d" % self.e
+
+ne = Current(1,3,4,4)
+ne.printCurrents()
+ne.setNorth(2)
+ne.printCurrents()
+
+
