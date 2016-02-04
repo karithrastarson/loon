@@ -1,5 +1,5 @@
 '''
-Created by: Kári Þrastarson,2016
+Created by: Kari Thrastarson,2016
 
 This is the WORLD in which the model is run.
 
@@ -40,13 +40,13 @@ class World:
 
 w = World()
 
-w.applyCurrents
+w.applyCurrents()
 w.printGrid()
 wait = input("PRESS ENTER TO CONTINUE.")
-w.applyCurrents
+w.applyCurrents()
 w.printGrid()
 wait = input("PRESS ENTER TO CONTINUE.")
-w.applyCurrents
+w.applyCurrents()
 w.printGrid()
 
 
