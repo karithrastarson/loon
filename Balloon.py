@@ -1,4 +1,6 @@
 from Current import Current
+
+
 class Balloon:
 
 	#Constructor which gives starting position
@@ -6,6 +8,7 @@ class Balloon:
 		self.x = startX
 		self.y = startY
 		self.wind = c
+		 
 
 	#Get and set functions
 	def getX(self):
