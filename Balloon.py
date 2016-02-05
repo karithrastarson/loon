@@ -9,6 +9,11 @@ class Balloon:
 		self.y = startY
 		self.wind = c
 		 
+	def __eq__(self, other):
+		test1 = self.getX() == other.getX()
+		test2 = self.getY() == other.getY()
+		test3 = self.getCurrent() == other.getCurrent()
+		return (test1 and test2 and test3);
 
 	#Get and set functions
 	def getX(self):

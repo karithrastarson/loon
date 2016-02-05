@@ -18,7 +18,7 @@ class World:
 	def __init__(self):
 		#The size of the grid for the balloons
 		self.GRID_SIZE = 10
-		self.grid = [[0 for x in range(self.GRID_SIZE)] for x in range(self.GRID_SIZE)] 
+		self.grid = [[[None] for x in range(self.GRID_SIZE)] for x in range(self.GRID_SIZE)] 
 
 #To begin with the available currents are the 3
 		self.stratosphere = [Current(1,3), Current(-3, 3), Current(0,3)]
@@ -28,22 +28,22 @@ class World:
 		for x in range(self.GRID_SIZE):
 			cur = random.randint(0,2)
 			self.allBalloons.append(Balloon(0,0,self.stratosphere[cur]));
-			self.grid[0][0] += 1
+			self.grid[0][0].append(Balloon(0,0,self.stratosphere[cur]))
 
 
 
 
 	def applyCurrents(self):
 		for b in self.allBalloons:
-			self.grid[b.getX()][b.getY()] -= 1
+			#self.grid[b.getX()][b.getY()] -= 1
 			b.applyCurrent()
-			self.grid[b.getX()][b.getY()] += 1
+			self.grid[b.getX()][b.getY()].append(b)
 
 	def printGrid(self):
 		for i in range(self.GRID_SIZE):
 			print(" ")
 			for j in range(self.GRID_SIZE):
-				print (self.grid[i][j], end="")
+				print (len(self.grid[i][j]), end="")
 
 
 w = World()
