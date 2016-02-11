@@ -12,17 +12,17 @@ import random
 
 from Balloon import Balloon
 from Current import Current
+
 class World:
 
 #Constructor
 	def __init__(self):
 		#The size of the grid for the balloons
-		self.GRID_SIZE = 10
+		self.GRID_SIZE = 500
 		self.grid = [[[None] for x in range(self.GRID_SIZE)] for x in range(self.GRID_SIZE)] 
 
 #To begin with the available currents are the 3
-		self.stratosphere = [Current(1,3), Current(-3, 3), Current(0,3)]
-
+		self.stratosphere = [Current(10,35), Current(-53, 43), Current(20,33)]
 		self.allBalloons = [];
 #Add the balloons to the grid
 		for x in range(self.GRID_SIZE):
@@ -31,31 +31,33 @@ class World:
 			self.grid[0][0].append(Balloon(0,0,self.stratosphere[cur]))
 
 
-
-
 	def applyCurrents(self):
 		for b in self.allBalloons:
-			#self.grid[b.getX()][b.getY()] -= 1
 			b.applyCurrent()
+			self.adjustPosition(b)
 			self.grid[b.getX()][b.getY()].append(b)
 
-	def printGrid(self):
-		for i in range(self.GRID_SIZE):
-			print(" ")
-			for j in range(self.GRID_SIZE):
-				print (len(self.grid[i][j]), end="")
+	def moveDecisions(self):
+		for b in self.allBalloons:
+			x = b.getX()
+			y = b.getY()
+			if len(self.grid[x][y]) > 1:
+				newCurrent = random.randint(0,2)
+				b.changeCurrent(self.stratosphere[newCurrent])
+
+	def adjustPosition(self,b):
+		if abs(b.getX()) >= self.GRID_SIZE:
+			b.setX((abs(b.getX())-self.GRID_SIZE))
+		if abs(b.getY()) >= self.GRID_SIZE:
+			b.setY((abs(b.getY())-self.GRID_SIZE))
+	#def simulate(self):
+		#self.gui.simulate()
 
 
-w = World()
+#w = World()
+#w.simulate()
 
-w.applyCurrents()
-w.printGrid()
-wait = input("PRESS ENTER TO CONTINUE.")
-w.applyCurrents()
-w.printGrid()
-wait = input("PRESS ENTER TO CONTINUE.")
-w.applyCurrents()
-w.printGrid()
+
 
 
 
