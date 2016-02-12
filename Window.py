@@ -6,8 +6,8 @@ CANVAS_SIZE = 500
 COVERAGE_RADIUS = 8
 class simpleapp_tk(Tkinter.Tk):
 	def __init__(self,parent):
+
 		
-		self.world = World()
 		Tkinter.Tk.__init__(self,parent)
 		self.parent = parent
 		
@@ -18,7 +18,7 @@ class simpleapp_tk(Tkinter.Tk):
 	def initialize(self):
 		#Variables and triggers
 		self.runTrigger = 0
-		
+		self.world = World()
 		
 		self.grid()
 
@@ -47,7 +47,6 @@ class simpleapp_tk(Tkinter.Tk):
 
 
 	def stepClick(self):
-		print("You clicked STEP button !")
 		self.world.applyCurrents()
 		self.world.moveDecisions()
 		self.canvas.delete("all")
@@ -60,16 +59,20 @@ class simpleapp_tk(Tkinter.Tk):
 
 	def autoClick(self):
 		self.runTrigger = 1
+		
 		while(self.runTrigger):
 			self.stepClick()
-			time.sleep(1)
+			self.update()
+
+		
+
 
 	def stopClick(self):
-		print("You clicked STOP button !")
 		self.runTrigger = 0
 
 	def resetClick(self):
-		print("You clicked RESET button !")
+		self.runTrigger = 0
+		self.initialize()
 
 			
 
