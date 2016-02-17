@@ -1,16 +1,15 @@
-import Tkinter
+import tkinter
 from World import World 
 import time
 
-CANVAS_SIZE = 500
-WINDOW_WIDTH = 750
-COVERAGE_RADIUS = 8
-class simpleapp_tk(Tkinter.Tk):
+
+class simpleapp_tk(tkinter.Tk):
 	def __init__(self,parent):
 
 		
-		Tkinter.Tk.__init__(self,parent)
+		tkinter.Tk.__init__(self,parent)
 		self.parent = parent
+
 		self.initialize()
 
 
@@ -23,32 +22,34 @@ class simpleapp_tk(Tkinter.Tk):
 		self.grid()
 
 		#Buttons
-		button = Tkinter.Button(self, text=u"Step", command=self.stepClick)
-		button.grid(column=0, row=0, sticky = 'NW')
+		button = tkinter.Button(self, text=u"Step", command=self.stepClick)
+		button.grid(column=0, row=0, sticky = 'N')
 
-		button = Tkinter.Button(self, text=u"Auto", command=self.autoClick)
-		button.grid(column=0, row=1, sticky = 'NW')
+		button = tkinter.Button(self, text=u"Auto", command=self.autoClick)
+		button.grid(column=0, row=1, sticky = 'N')
 
-		button = Tkinter.Button(self, text=u"Stop", command=self.stopClick)
-		button.grid(column=0, row=2, sticky = 'NW')
+		button = tkinter.Button(self, text=u"Stop", command=self.stopClick)
+		button.grid(column=0, row=2, sticky = 'N')
 
-		button = Tkinter.Button(self, text=u"Reset", command=self.resetClick)
-		button.grid(column=0, row=3, sticky = 'NW')
+		button = tkinter.Button(self, text=u"Reset", command=self.resetClick)
+		button.grid(column=0, row=3, sticky = 'N')
 
+		button = tkinter.Button(self, text=u"Output", command=self.outputClick)
+		button.grid(column=2, row=4, sticky = 'E')
 
 		#Label - Title
-		label = Tkinter.Label(self, anchor="nw", fg="black",bg="white",text="Output")
-		label.grid(column=2, row=2)
+		label = tkinter.Label(self, anchor="nw", fg="black",bg="white",text="Output")
+		label.grid(column=2, row=0)
 		#Label - Output
-		self.labelVariable = Tkinter.StringVar()
+		self.labelVariable = tkinter.StringVar()
 		
-		label = Tkinter.Label(self,height="10", width = "30", textvariable=self.labelVariable,
+		label = tkinter.Label(self,height="10", width = "30", textvariable=self.labelVariable,
 			anchor="nw", fg="green",bg="black") 
-		label.grid(column=2,row=3,sticky='N')
+		label.grid(column=2,row=1,rowspan=3)
 
 		#Canvas
-		self.canvas = Tkinter.Canvas(width=CANVAS_SIZE, height=CANVAS_SIZE)
-		self.canvas.grid(column=1,row=3, sticky='N')
+		self.canvas = tkinter.Canvas(width=self.world.GRID_SIZE, height=self.world.GRID_SIZE)
+		self.canvas.grid(column=1,row=0,rowspan=5)
 		#self.refreshCanvas()
 
 
@@ -57,7 +58,7 @@ class simpleapp_tk(Tkinter.Tk):
 		self.world.moveDecisions()
 		self.canvas.delete("all")
 		for b in self.world.allBalloons:
-			self.canvas.create_oval(b.getX()-COVERAGE_RADIUS,b.getY()-COVERAGE_RADIUS,b.getX()+COVERAGE_RADIUS,b.getY()+COVERAGE_RADIUS, fill="blue")
+			self.canvas.create_oval(b.getX()-self.world.COVERAGE_RADIUS,b.getY()-self.world.COVERAGE_RADIUS,b.getX()+self.world.COVERAGE_RADIUS,b.getY()+self.world.COVERAGE_RADIUS, fill="blue")
 			self.canvas.create_oval(b.getX()-4,b.getY()-4,b.getX()+4,b.getY()+4, fill="red")
 			self.canvas.create_line(b.getX(),b.getY(), b.getX()+b.getCurrent().getX(), b.getY()+b.getCurrent().getY(),arrow="last")
 		
@@ -68,6 +69,7 @@ class simpleapp_tk(Tkinter.Tk):
 		
 		while(self.runTrigger):
 			self.stepClick()
+			
 			self.update()
 
 		
@@ -85,6 +87,10 @@ class simpleapp_tk(Tkinter.Tk):
 		s += str
 		s += self.labelVariable.get()
 		self.labelVariable.set(s)
+
+	def outputClick(self):
+		s = self.world.returnStats()
+		self.output(s)
 
 
 			
