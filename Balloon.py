@@ -11,10 +11,15 @@ class Balloon:
 		self.currentLayer = cur
 		 
 	def __eq__(self, other):
+		if other is None:
+			return False
+		cur1 = self.getCurrent()
+		cur2 = other.getCurrent()
+
 		test1 = self.getX() == other.getX()
 		test2 = self.getY() == other.getY()
-		test3 = self.getCurrent() == other.getCurrent()
-		return (test1 and test2 and test3);
+		test3 = cur1 == cur2
+		return (test1 and (test2 and test3))
 
 	#Get and set functions
 	def getX(self):
@@ -27,8 +32,12 @@ class Balloon:
 		self.y = newY
 	def getCurrent(self):
 		return self.wind
-	def changeCurrent(self, cur):
-		self.wind = cur
+
+	def getCurrentLayer(self):
+		return self.currentLayer
+	def changeCurrent(self,c, cur):
+		self.currentLayer = cur
+		self.wind = c
 	def applyCurrent(self):
 		self.x = self.x + self.wind.getX()
 		self.y = self.y + self.wind.getY()
